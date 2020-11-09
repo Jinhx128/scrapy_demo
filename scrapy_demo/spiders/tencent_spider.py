@@ -14,9 +14,12 @@ class TencentSpider(scrapy.Spider):
         'size': 10,
         'page': 1,
         'timestamp': int(time.time() * 1000),
+        'cityId': 1,
+        'categoryId': '40001001,40001002,40001003,40001004,40001005,40001006',
+        'attrId': 1,
         'keyword': 'java'
     }
-    base_url = 'https://careers.tencent.com/tencentcareer/api/post/Query?timestamp={}&countryId=&cityId=&bgIds=&productId=&categoryId=&parentCategoryId=&attrId=&keyword={}&pageIndex={}&pageSize={}&language=zh-cn&area=cn'.format(data['timestamp'], data['keyword'], data['page'], data['size'])
+    base_url = 'https://careers.tencent.com/tencentcareer/api/post/Query?timestamp={}&countryId=&cityId={}&bgIds=&productId=&categoryId={}&parentCategoryId=&attrId={}&keyword={}&pageIndex={}&pageSize={}&language=zh-cn&area=cn'.format(data['timestamp'], data['cityId'], data['categoryId'], data['attrId'], data['keyword'], data['page'], data['size'])
     start_urls = [base_url]  # spider在启动时爬取的入口url列表，后续的url从初始的url抓取到的数据中提取
 
     def parse(self,response):  # 定义回调函数，每个初始url完成下载后生成的response对象会作为唯一参数传递给parse()函数。负责解析数据、提取数据（生成Item）、以及生成需要进一步处理的url
@@ -45,4 +48,4 @@ class TencentSpider(scrapy.Spider):
         if self.data['size'] * self.data['page'] < total:
             self.data['page'] += 1
             self.data['timestamp'] = int(time.time() * 1000)
-            yield scrapy.Request('https://careers.tencent.com/tencentcareer/api/post/Query?timestamp={}&countryId=&cityId=&bgIds=&productId=&categoryId=&parentCategoryId=&attrId=&keyword={}&pageIndex={}&pageSize={}&language=zh-cn&area=cn'.format(self.data['timestamp'], self.data['keyword'], self.data['page'], self.data['size']), callback=self.parse)
+            yield scrapy.Request('https://careers.tencent.com/tencentcareer/api/post/Query?timestamp={}&countryId=&cityId={}&bgIds=&productId=&categoryId={}&parentCategoryId=&attrId={}&keyword={}&pageIndex={}&pageSize={}&language=zh-cn&area=cn'.format(self.data['timestamp'], self.data['cityId'], self.data['categoryId'], self.data['attrId'], self.data['keyword'], self.data['page'], self.data['size']), callback=self.parse)
