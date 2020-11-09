@@ -35,6 +35,7 @@ class TestSpider(scrapy.Spider):
                 if len(node.xpath('.//td[@class="num"]//em/text()')) else None
             yield item  # 返回item（列表），return会直接退出程序，这里是有yield
 
-        if self.page < int(totalpage):
+        # if self.page < int(totalpage):
+        if self.page < 10:
             self.page += 1
             yield scrapy.Request(self.base_url + str(self.page), callback=self.parse)  # 返回请求，请求回调parse，此处也是是有yield

@@ -12,7 +12,7 @@ class TestPipeline:
     # def process_item(self, item, spider):
     #     return item
     def __init__(self):
-        self.f = open('test.json', 'wb')
+        self.f = open('scrapy_demo/file/test.json', 'wb')
 
     def process_item(self, item, spider):
         if item['title'] != None:  # 过滤掉移动类的帖子
@@ -27,7 +27,35 @@ class LuoyublogPipeline:
     # def process_item(self, item, spider):
     #     return item
     def __init__(self):
-        self.f = open('luoyublog.json', 'wb')
+        self.f = open('scrapy_demo/file/luoyublog.json', 'wb')
+
+    def process_item(self, item, spider):
+        data = json.dumps(dict(item), ensure_ascii=False, indent=4) + ','
+        self.f.write(data.encode('utf-8'))
+        return item  # 返回item，告诉引擎，我已经处理好了，你可以进行下一个item数据的提取了
+
+    def close_spider(self, spider):
+        self.f.close()
+
+class AosunPipeline:
+    # def process_item(self, item, spider):
+    #     return item
+    def __init__(self):
+        self.f = open('scrapy_demo/file/aosun.json', 'wb')
+
+    def process_item(self, item, spider):
+        data = json.dumps(dict(item), ensure_ascii=False, indent=4) + ','
+        self.f.write(data.encode('utf-8'))
+        return item  # 返回item，告诉引擎，我已经处理好了，你可以进行下一个item数据的提取了
+
+    def close_spider(self, spider):
+        self.f.close()
+
+class TencentPipeline:
+    # def process_item(self, item, spider):
+    #     return item
+    def __init__(self):
+        self.f = open('scrapy_demo/file/tencent.json', 'wb')
 
     def process_item(self, item, spider):
         data = json.dumps(dict(item), ensure_ascii=False, indent=4) + ','

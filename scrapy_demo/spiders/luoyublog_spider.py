@@ -2,6 +2,7 @@
 import scrapy
 from scrapy_demo.items import LuoyublogItem
 
+
 class LuoyublogSpider(scrapy.Spider):
     name = 'luoyublog_spider'  # 定义爬虫的名称，用于区别spider，该名称必须是唯一的，不可为不同的spider设置相同的名字
     custom_settings = {
